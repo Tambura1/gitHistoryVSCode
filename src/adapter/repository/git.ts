@@ -158,12 +158,13 @@ export class Git implements IGitService {
     public async getLogEntries(
         pageIndex = 0,
         pageSize = 0,
-        branch = '',
+        branches: string[] = [],
         searchText = '',
         file?: Uri,
         lineNumber?: number,
         author?: string,
     ): Promise<LogEntries> {
+        branches = Array.isArray(branches) ? branches : [];
         if (pageSize <= 0) {
             const workspace = this.serviceContainer.get<IWorkspaceService>(IWorkspaceService);
             pageSize = workspace.getConfiguration('gitHistory').get<number>('pageSize', 100);
@@ -173,7 +174,7 @@ export class Git implements IGitService {
         const args = this.gitArgsService.getLogArgs(
             pageIndex,
             pageSize,
-            branch,
+            branches,
             searchText,
             relativePath,
             lineNumber,
@@ -215,7 +216,7 @@ export class Git implements IGitService {
         return {
             items,
             count,
-            branch,
+            branches,
             file,
             pageIndex,
             pageSize,

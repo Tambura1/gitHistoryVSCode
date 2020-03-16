@@ -141,7 +141,7 @@ export interface IGitService {
     getLogEntries(
         pageIndex?: number,
         pageSize?: number,
-        branch?: string,
+        branches?: string[],
         searchText?: string,
         file?: Uri,
         lineNumber?: number,
