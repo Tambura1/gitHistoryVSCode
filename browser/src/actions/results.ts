@@ -120,6 +120,7 @@ export namespace ResultActions {
 
     export const search = (searchText: string) => {
         return (dispatch: Dispatch<any>, getState: () => RootState) => {
+            dispatch(notifyIsLoading());
             dispatch(updateSettings({ searchText }));
             const state = getState();
             return fetchCommits(dispatch, state, 0, undefined);
@@ -127,6 +128,7 @@ export namespace ResultActions {
     };
     export const clearSearch = () => {
         return (dispatch: Dispatch<any>, getState: () => RootState) => {
+            dispatch(notifyIsLoading());
             dispatch(updateSettings({ searchText: '', authorFilter: undefined }));
             const state = getState();
             return fetchCommits(dispatch, state, 0, undefined);
@@ -135,15 +137,16 @@ export namespace ResultActions {
     export const selectBranch = (branchName: string, branchSelection: BranchSelection) => {
         return (dispatch: Dispatch<any>, getState: () => RootState) => {
             //state.settings.branchName = branchName;
+            dispatch(notifyIsLoading());
             dispatch(updateSettings({ branchName, branchSelection }));
             dispatch(clearCommits());
-            dispatch(notifyIsLoading());
             const state = getState();
             return fetchCommits(dispatch, state, 0, undefined);
         };
     };
     export const selectAuthor = (authorName: string) => {
         return (dispatch: Dispatch<any>, getState: () => RootState) => {
+            dispatch(notifyIsLoading());
             dispatch(updateSettings({ authorFilter: authorName }));
             const state = getState();
             return fetchCommits(dispatch, state, 0, undefined);
